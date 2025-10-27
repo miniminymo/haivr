@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>발표불안 자가진단 | VR 치료 연구 참여</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .info-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-box li {
+            padding: 8px 0;
+            color: #555;
+        }
+
+        .info-box li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .warning-box strong {
+            color: #856404;
+        }
+
+        .question-container {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 2px solid #e9ecef;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .question-text {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option-label:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .option-label input[type="radio"] {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .option-label input[type="radio"]:checked ~ span {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 10px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result-container {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .score-display {
+            font-size: 72px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 20px 0;
+        }
+
+        .result-box {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .result-box h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .result-box p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .type-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #667eea;
+            color: white;
+            border-radius: 20px;
+            margin: 5px;
+            font-size: 14px;
+        }
+
+        .recruitment-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        .recruitment-box h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .recruitment-box ul {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .recruitment-box li {
+            padding: 10px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .recruitment-box li:before {
+            content: "🎯";
+            position: absolute;
+            left: 0;
+        }
+
+        .form-button-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn-apply {
+            flex: 1;
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 18px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-apply:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-copy {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 18px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-copy:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .copy-success {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+            color: #fff;
+            font-size: 14px;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .share-kakao {
+            background: #FEE500;
+            color: #000;
+        }
+
+        .share-facebook {
+            background: #1877f2;
+            color: white;
+        }
+
+        .share-twitter {
+            background: #1da1f2;
+            color: white;
+        }
+
+        .share-copy {
+            background: #6c757d;
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-overlay.show {
+            display: flex;
+        }
+
+        .loading-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .question-container {
+                padding: 20px;
+            }
+
+            .form-button-container {
+                flex-direction: column;
+            }
+
+            .btn-apply, .btn-copy {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p>데이터를 저장하고 있습니다...</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>📊 발표불안 자가진단</h1>
+            <p>PRPSA-18 척도로 알아보는 나의 발표불안 유형</p>
+        </div>
+
+        <div class="content">
+            <div id="intro-section">
+                <div class="info-box">
+                    <h3>검사 안내</h3>
+                    <ul>
+                        <li>총 18문항으로 구성된 발표불안 자가진단 검사입니다</li>
+                        <li>각 문항을 읽고 자신에게 해당하는 정도를 선택해주세요</li>
+                        <li>약 5-10분 정도 소요됩니다</li>
+                        <li>정직하고 솔직하게 답변해주세요</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ 주의사항</strong><br>
+                    본 척도는 연구용으로 번역된 것으로, <strong>한국어 타당화가 완료되지 않았습니다.</strong> 결과는 참고용으로만 활용해주시기 바랍니다.
+                </div>
+
+                <div class="info-box">
+                    <h3>🎮 VR 노출치료 연구 참여 안내</h3>
+                    <ul>
+                        <li>발표불안이 높게 측정되는 분들께 VR 치료 연구 참여 기회를 드립니다</li>
+                        <li>최신 가상현실 기술을 통한 혁신적인 치료 연구에 참여해보세요</li>
+                    </ul>
+                </div>
+
+                <button class="btn" onclick="startSurvey()">검사 시작하기</button>
+            </div>
+
+            <div id="survey-section" class="hidden">
+                <div class="progress-text">
+                    <span id="current-question">1</span> / 18 문항
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+
+                <div id="questions-container"></div>
+
+                <button class="btn" id="submit-btn" onclick="calculateResult()" disabled>결과 확인하기</button>
+            </div>
+
+            <div id="result-section" class="hidden">
+                <div class="result-container">
+                    <h2>검사 결과</h2>
+                    <div class="score-display" id="total-score">0</div>
+                    <p style="color: #666; margin-bottom: 30px;">총점 (18-90점)</p>
+
+                    <div class="result-box">
+                        <h3>📈 발표불안 수준</h3>
+                        <p id="level-description"></p>
+                    </div>
+
+                    <div class="result-box">
+                        <h3>🎯 나의 발표불안 유형</h3>
+                        <div id="type-description"></div>
+                    </div>
+
+                    <div id="recruitment-section" class="hidden">
+                        <div class="recruitment-box">
+                            <h3>🎮 VR 노출치료 연구 참여 기회!</h3>
+                            <p>귀하의 발표불안 수준이 높게 측정되어, VR 가상현실을 활용한 혁신적인 노출치료 연구에 참여하실 수 있습니다.</p>
+                            
+                            <ul>
+                                <li>최신 VR 기술을 활용한 개인 맞춤형 치료</li>
+                                <li>전문가의 체계적인 관리 및 피드백</li>
+                                <li>참여 사례금 및 교통비 지원</li>
+                                <li>치료 효과에 대한 과학적 평가 제공</li>
+                            </ul>
+
+                            <div class="form-button-container">
+                                <a href="https://forms.gle/3JJCtTb1XV3xVSZ68" target="_blank" class="btn-apply" onclick="trackApplyClick()">
+                                    🚀 바로 신청하기
+                                </a>
+                                <button class="btn-copy" onclick="copyFormLink()">
+                                    📋 링크 복사하기
+                                </button>
+                            </div>
+                            <div class="copy-success" id="copy-success">✅ 링크가 복사되었습니다!</div>
+                        </div>
+                    </div>
+
+                    <div class="result-box">
+                        <h3>💡 발표불안 관리 팁</h3>
+                        <p id="tips-description"></p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 40px;">
+                    <h3 style="color: #667eea; margin-bottom: 20px;">친구들에게도 공유해보세요! 📢</h3>
+                    <div class="share-buttons">
+                        <button class="share-btn share-kakao" onclick="shareKakao()">카카오톡 공유</button>
+                        <button class="share-btn share-facebook" onclick="shareFacebook()">페이스북 공유</button>
+                        <button class="share-btn share-twitter" onclick="shareTwitter()">트위터 공유</button>
+                        <button class="share-btn share-copy" onclick="copyLink()">링크 복사</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ⭐⭐⭐ 여기에 Google Apps Script 웹앱 URL을 입력하세요! ⭐⭐⭐
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwTZFE0TEF8Q3HkE3i1NPMgmL9gt37Vsw6KBe1zM5rCMIn5PMi91f84lJqQM6hdtMWZ/exec';
+        // 예: 'https://script.google.com/macros/s/AKfycbx.../exec'
+
+        const questions = [
+            // 요인 1: 예기불안 및 발표수행 중 생리적 증상
+            { text: "발표를 준비할 때 긴장되고 불안하다.", reverse: false, factor: 1 },
+            { text: "공부할 때 강의계획서에서 '발표'나 '프레젠테이션'이라는 단어를 보면 긴장된다.", reverse: false, factor: 1 },
+            { text: "다가오는 발표를 생각하면 불안해진다.", reverse: false, factor: 1 },
+            { text: "나는 발표하는 것이 두렵지 않다.", reverse: true, factor: 1 },
+            { text: "교수가 수업에서 발표 과제를 공지하면 긴장되는 것을 느낄 수 있다.", reverse: false, factor: 1 },
+            { text: "나는 발표하는 것을 두려워하지 않는다.", reverse: true, factor: 1 },
+            { text: "발표를 시작할 때 심장이 매우 빨리 뛴다.", reverse: false, factor: 1 },
+            { text: "발표가 시작되기 직전 강의실에 앉아 있으면 상당한 불안을 경험한다.", reverse: false, factor: 1 },
+            { text: "발표하기 한 시간 전쯤에는 편안하고 긴장이 풀린다.", reverse: true, factor: 1 },
+            { text: "발표 전날 밤에는 잠들기가 어렵다.", reverse: false, factor: 1 },
+            { text: "발표를 하는 동안 심장이 매우 빨리 뛴다.", reverse: false, factor: 1 },
+            { text: "발표할 차례를 기다리는 동안 불안하다.", reverse: false, factor: 1 },
+            // 요인 2: 발표수행 중 통제력 부족
+            { text: "발표를 마친 후에는 즐거운 경험을 했다고 느낀다.", reverse: true, factor: 2 },
+            { text: "발표하는 동안 내 자신을 완전히 통제할 수 있다고 느낀다.", reverse: true, factor: 2 },
+            { text: "발표할 때 마음이 맑다.", reverse: true, factor: 2 },
+            { text: "발표하는 동안 긴장감과 스트레스를 통제할 수 있다는 것을 안다.", reverse: true, factor: 2 },
+            { text: "중요한 발표를 하는 동안 내 안에서 무력감이 쌓여가는 것을 경험한다.", reverse: false, factor: 2 },
+            { text: "발표하는 동안 너무 긴장해서 정말 아는 사실들도 잊어버린다.", reverse: false, factor: 2 }
+        ];
+
+        const answers = new Array(18).fill(null);
+        let sessionId = null; // 세션 ID로 사용자 구분
+
+        function startSurvey() {
+            // 고유 세션 ID 생성 (타임스탬프 + 랜덤)
+            sessionId = Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+            
+            document.getElementById('intro-section').classList.add('hidden');
+            document.getElementById('survey-section').classList.remove('hidden');
+            renderQuestions();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.innerHTML = `
+                    <div class="question-text">
+                        <span class="question-number">${index + 1}</span>
+                        ${q.text}
+                    </div>
+                    <div class="options">
+                        ${[1, 2, 3, 4, 5].map(value => `
+                            <label class="option-label">
+                                <input type="radio" name="q${index}" value="${value}" onchange="updateAnswer(${index}, ${value})">
+                                <span>${getOptionText(value)}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function getOptionText(value) {
+            const texts = {
+                1: '전혀 그렇지 않다',
+                2: '그렇지 않다',
+                3: '보통이다',
+                4: '그렇다',
+                5: '매우 그렇다'
+            };
+            return texts[value];
+        }
+
+        function updateAnswer(index, value) {
+            answers[index] = value;
+            updateProgress();
+            checkCompletion();
+        }
+
+        function updateProgress() {
+            const answered = answers.filter(a => a !== null).length;
+            const progress = (answered / 18) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            document.getElementById('current-question').textContent = answered;
+        }
+
+        function checkCompletion() {
+            const allAnswered = answers.every(a => a !== null);
+            document.getElementById('submit-btn').disabled = !allAnswered;
+        }
+
+        function calculateResult() {
+            let totalScore = 0;
+            let factor1Score = 0;
+            let factor2Score = 0;
+
+            questions.forEach((q, index) => {
+                let score = answers[index];
+                if (q.reverse) {
+                    score = 6 - score; // 역채점
+                }
+                totalScore += score;
+
+                if (q.factor === 1) {
+                    factor1Score += score;
+                } else {
+                    factor2Score += score;
+                }
+            });
+
+            // Google Sheets에 초기 데이터 전송 (참여버튼: 아니오)
+            sendDataToGoogleSheets(totalScore, factor1Score, factor2Score, false);
+
+            displayResult(totalScore, factor1Score, factor2Score);
+        }
+
+        function sendDataToGoogleSheets(totalScore, factor1Score, factor2Score, clickedApply) {
+            // URL이 설정되지 않았으면 전송하지 않음
+            if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
+                console.log('Google Script URL이 설정되지 않았습니다.');
+                return;
+            }
+
+            const data = {
+                sessionId: sessionId,
+                totalScore: totalScore,
+                factor1Score: factor1Score,
+                factor2Score: factor2Score,
+                clickedApply: clickedApply,
+                answers: answers,
+                action: clickedApply ? 'update' : 'insert' // insert: 새 행 추가, update: 버튼 클릭 업데이트
+            };
+
+            // 로딩 표시
+            document.getElementById('loading-overlay').classList.add('show');
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(() => {
+                console.log('데이터 전송 성공');
+                document.getElementById('loading-overlay').classList.remove('show');
+            })
+            .catch((error) => {
+                console.error('데이터 전송 실패:', error);
+                document.getElementById('loading-overlay').classList.remove('show');
+            });
+        }
+
+        function displayResult(totalScore, factor1Score, factor2Score) {
+            document.getElementById('survey-section').classList.add('hidden');
+            document.getElementById('result-section').classList.remove('hidden');
+
+            document.getElementById('total-score').textContent = totalScore;
+
+            // 수준 설명
+            let levelDesc = '';
+            if (totalScore >= 58) {
+                levelDesc = '높은 수준의 발표불안이 측정되었습니다. 발표 상황에서 상당한 불안과 스트레스를 경험하는 것으로 보입니다. VR 노출치료를 통해 체계적인 관리와 개선이 가능합니다.';
+                document.getElementById('recruitment-section').classList.remove('hidden');
+            } else if (totalScore >= 45) {
+                levelDesc = '중간 수준의 발표불안이 측정되었습니다. 발표 상황에서 어느 정도의 불안을 느끼지만, 관리 가능한 수준입니다. 적절한 대처 전략을 통해 개선할 수 있습니다.';
+            } else {
+                levelDesc = '낮은 수준의 발표불안이 측정되었습니다. 발표 상황을 비교적 편안하게 느끼는 편입니다. 현재 수준을 잘 유지하시기 바랍니다.';
+            }
+            document.getElementById('level-description').textContent = levelDesc;
+
+            // 유형 설명
+            const factor1Avg = factor1Score / 12;
+            const factor2Avg = factor2Score / 6;
+            
+            let typeDesc = '<div style="margin-bottom: 15px;">';
+            
+            if (factor1Avg > 3.5) {
+                typeDesc += '<span class="type-badge">예기불안 및 생리적 증상 높음</span><br><br>';
+                typeDesc += '<p><strong>예기불안 및 생리적 증상:</strong> 발표 전후로 높은 불안감과 생리적 반응(심박수 증가, 수면 문제 등)을 경험합니다. 발표 상황을 미리 예상하는 것만으로도 긴장되고, 실제 발표 시 신체적 증상이 두드러지게 나타납니다.</p>';
+            }
+            
+            if (factor2Avg > 3.5) {
+                typeDesc += '<span class="type-badge">통제력 부족 높음</span><br><br>';
+                typeDesc += '<p><strong>발표수행 중 통제력 부족:</strong> 발표하는 동안 자신을 통제하기 어렵고, 무력감을 느끼며, 긴장으로 인해 기억력이 저하되는 경험을 합니다. 발표 상황에서 자신감이 부족하고 스트레스 관리가 어렵습니다.</p>';
+            }
+            
+            if (factor1Avg <= 3.5 && factor2Avg <= 3.5) {
+                typeDesc += '<p>두 영역 모두 적정 수준으로, 발표불안이 크게 문제되지 않는 편입니다.</p>';
+            }
+            
+            typeDesc += '</div>';
+            document.getElementById('type-description').innerHTML = typeDesc;
+
+            // 팁 설명
+            let tipsDesc = '';
+            if (totalScore >= 58) {
+                tipsDesc = '복식호흡, 점진적 근육이완법 등을 통해 생리적 각성을 낮추고, 인지적 재구성을 통해 부정적 사고를 조절하며, 체계적 둔감화를 통한 점진적 노출이 효과적입니다. 전문적인 VR 치료 프로그램 참여를 권장드립니다.';
+            } else if (totalScore >= 45) {
+                tipsDesc = '충분한 준비와 연습을 통해 자신감을 높이고, 긍정적 자기대화를 활용하며, 작은 발표부터 시작하여 점진적으로 난이도를 높여가는 것이 도움이 됩니다.';
+            } else {
+                tipsDesc = '현재 수준을 유지하기 위해 정기적인 발표 경험을 이어가고, 새로운 주제나 다양한 청중 앞에서의 발표에 도전해보세요.';
+            }
+            document.getElementById('tips-description').textContent = tipsDesc;
+
+            // 점수와 세션ID를 저장 (버튼 클릭 시 사용)
+            window.surveyData = {
+                totalScore: totalScore,
+                factor1Score: factor1Score,
+                factor2Score: factor2Score
+            };
+
+            // 스크롤을 최상단으로
+            window.scrollTo(0, 0);
+        }
+
+        function trackApplyClick() {
+            // 참여 버튼 클릭 시 Google Sheets 업데이트
+            if (window.surveyData) {
+                sendDataToGoogleSheets(
+                    window.surveyData.totalScore,
+                    window.surveyData.factor1Score,
+                    window.surveyData.factor2Score,
+                    true // 참여 버튼 클릭됨
+                );
+            }
+        }
+
+        function copyFormLink() {
+            const formUrl = 'https://forms.gle/3JJCtTb1XV3xVSZ68';
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(formUrl).then(() => {
+                    showCopySuccess();
+                }).catch(err => {
+                    fallbackCopy(formUrl);
+                });
+            } else {
+                fallbackCopy(formUrl);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showCopySuccess();
+            } catch (err) {
+                alert('링크 복사에 실패했습니다. 직접 복사해주세요: ' + text);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        function showCopySuccess() {
+            const successMsg = document.getElementById('copy-success');
+            successMsg.style.display = 'block';
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+            }, 3000);
+        }
+
+        function shareKakao() {
+            const url = window.location.href;
+            const text = '나의 발표불안 유형이 궁금하다면? 3분이면 끝! 발표불안 자가진단 해보세요 📊';
+            
+            // 카카오톡 공유 (카카오 SDK 필요)
+            if (typeof Kakao !== 'undefined') {
+                Kakao.Link.sendDefault({
+                    objectType: 'feed',
+                    content: {
+                        title: '발표불안 자가진단',
+                        description: text,
+                        imageUrl: '',
+                        link: {
+                            mobileWebUrl: url,
+                            webUrl: url,
+                        },
+                    },
+                });
+            } else {
+                // SDK 없을 경우 대체 방법
+                alert('링크: ' + url + '\n\n친구에게 공유해주세요!');
+            }
+        }
+
+        function shareFacebook() {
+            const url = window.location.href;
+            window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url), '_blank');
+        }
+
+        function shareTwitter() {
+            const url = window.location.href;
+            const text = '나의 발표불안 유형 자가진단 결과';
+            window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(text), '_blank');
+        }
+
+        function copyLink() {
+            const url = window.location.href;
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('✅ 링크가 복사되었습니다!');
+                });
+            } else {
+                fallbackCopy(url);
+            }
+        }
+    </script>
+</body>
+</html>
